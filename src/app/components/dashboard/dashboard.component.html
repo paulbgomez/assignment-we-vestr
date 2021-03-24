@@ -1,0 +1,83 @@
+  <main>
+    <div class="container">
+      <div class="row">
+        <div class="col-12">
+          <mat-accordion>
+            <mat-expansion-panel (opened)="panelOpenState = true"
+                                 (closed)="panelOpenState = false"
+                                 *ngFor="let shareHolder of shareHolders,  first as isFirst; let i = index"
+                                 [expanded]="isFirst"
+                                 class="my-2">
+              <mat-expansion-panel-header >
+                <mat-panel-title>
+                  <h2 class="title-of-node">
+                    {{ shareHolder.name | uppercase }}
+                  </h2>
+                </mat-panel-title>
+              </mat-expansion-panel-header>
+
+              <div class="listOfStocks">
+                <h3>Owned Positions</h3>
+                <div class="row mb-4" *ngFor="let stock of shareHolder.stocks; let j = index">
+                  <div class="col-9">
+                    <span *ngIf="stock.totalAmountStock !== undefined">
+                      <h4 class="product-names-list">{{stock.enterpriseName}} - {{stock.amount * 100 / stock.totalAmountStock | number:'.2-2'}} % total actives</h4>
+                    </span>
+                    <mat-spinner *ngIf="stock.totalAmountStock == undefined"></mat-spinner>
+                  </div>
+                  <div class="col-2">
+                    <label>
+                      <input class="form-control" type="number" [(ngModel)]="stock.amount">
+                    </label>
+                  </div>
+                  <div class="col-1">
+                    <div class="example-button-container">
+                      <button (click)="buyActives(stock.amount, i, j)"  mat-mini-fab color="primary" >
+                        <mat-icon data-bs-toggle="tooltip" data-bs-placement="bottom" title="Update this position">cached</mat-icon>
+                      </button>
+                    </div>
+                  </div>
+                </div>
+                <div class="row mb-4">
+                  <h3>Add New Stock Positions</h3>
+                  <div class="col-9">
+                    <mat-form-field appearance="fill">
+                      <mat-label>Choose one enterprise</mat-label>
+                      <mat-select (selectionChange)="addNewEnterpriseToMyStocks($event.value, i)">
+                        <mat-option>None</mat-option>
+                        <mat-option *ngFor="let enterprise of enterprises" [value]="enterprise.id">{{enterprise.name | uppercase}}</mat-option>
+                      </mat-select>
+                    </mat-form-field>
+                  </div>
+                </div>
+                <div class="row mb-4">
+                  <div class="col-1">
+                    <button (click)="deleteShareHolder(shareHolder)" mat-mini-fab>
+                      <mat-icon data-bs-toggle="tooltip" data-bs-placement="right" title="Delete this shareholder">delete_outline</mat-icon>
+                    </button>
+                  </div>
+                </div>
+              </div>
+            </mat-expansion-panel>
+          </mat-accordion>
+        </div>
+      </div>
+    </div>
+
+    <div class="container">
+      <div class="col-sm-6 col-sm-offset-3">
+        <button class="align-self-center" (click)="openDialog()"  mat-stroked-button color="accent">Add Shareholder</button>
+      </div>
+    </div>
+
+    <div class="container">
+      <div class="col-sm-6 col-sm-offset-3" *ngIf="inputField">
+        <h4 class="pt-2">Type the name of a new shareholder to add and press enter</h4>
+        <input type="text" #inputName (keyup.enter)="addShareHolder(inputName.value)">
+      </div>
+    </div>
+
+  </main>
+
+
+

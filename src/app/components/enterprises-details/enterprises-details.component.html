@@ -1,0 +1,49 @@
+<main>
+  <h1 class="mx-2 py-4"> ENTERPRISES </h1>
+  <div *ngIf="enterprises" class="container">
+    <div class="row">
+      <div class="col-12">
+        <mat-accordion>
+          <mat-expansion-panel
+                               *ngFor="let enterprise of enterprises; let i = index"
+                               class="my-2">
+            <mat-expansion-panel-header >
+              <mat-panel-title>
+                <h2 class="title-of-node">
+                  {{ enterprise.name }}
+                </h2>
+              </mat-panel-title>
+            </mat-expansion-panel-header>
+
+            <div class="listOfStocks">
+              <div class="row mb-4">
+                <div class="col-6">
+                  <h4 class="product-names-list">{{enterprise.totalAmountStock}} total actions</h4>
+                </div>
+                <div class="col-4">
+                  <label>
+                    <input class="form-control" type="number" [(ngModel)]="enterprise.totalAmountStock">
+                  </label>
+                </div>
+                <div class="col-1">
+                  <div class="example-button-container">
+                    <button (click)="makeSplit(enterprise.totalAmountStock, enterprise.id)" mat-mini-fab color="primary" >
+                      <mat-icon data-bs-toggle="tooltip" data-bs-placement="bottom" title="Update this position">cached</mat-icon>
+                    </button>
+                  </div>
+                </div>
+                <div class="col-1">
+                  <div class="example-button-container">
+                    <button (click)="deleteEnterprise(enterprise)"  mat-mini-fab color="primary" >
+                      <mat-icon data-bs-toggle="tooltip" data-bs-placement="bottom" title="Update this position">delete_outline</mat-icon>
+                    </button>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </mat-expansion-panel>
+        </mat-accordion>
+      </div>
+    </div>
+  </div>
+</main>

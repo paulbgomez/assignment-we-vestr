@@ -1,1 +1,22 @@
-/* You can add global styles to this file, and also import other style files */
+
+@import '~@angular/material/theming';
+
+@include mat-core();
+
+$assignment-we-vestr-primary: mat-palette($mat-indigo);
+$assignment-we-vestr-accent: mat-palette($mat-pink, A200, A100, A400);
+
+$assignment-we-vestr-warn: mat-palette($mat-red);
+
+$assignment-we-vestr-theme: mat-light-theme((
+  color: (
+    primary: $assignment-we-vestr-primary,
+    accent: $assignment-we-vestr-accent,
+    warn: $assignment-we-vestr-warn,
+  )
+));
+
+@include angular-material-theme($assignment-we-vestr-theme);
+
+html, body { height: 100%; }
+body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
